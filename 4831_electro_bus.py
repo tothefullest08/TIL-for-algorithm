@@ -19,7 +19,6 @@ for tc in range(1, TC+1):
         for i in range(start+1, end+1):
             if station_lst[i] == 1:
                 start = i
-
             else:
                 zero += 1
 

@@ -17,10 +17,7 @@ def DFS(y, x):
         NewY = y+dy[dir]
         NewX = x+dx[dir]
         if IsSafe(NewY, NewX) and not (NewY, NewX) in visited:
-            break
-
-    DFS(NewY, NewX)
-
+            return DFS(NewY, NewX)
 
 for tc in range(1, 11):
     tc = int(input())
@@ -36,9 +33,3 @@ for tc in range(1, 11):
     visited = []
     DFS(start_y, start_x)
     print('#%d %d'%(tc, result))
-
-
-
-
-
-

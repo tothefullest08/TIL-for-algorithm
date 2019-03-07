@@ -4,7 +4,6 @@ sys.stdin = open('4871_그래프.txt', 'r')
 
 TC = int(input())
 
-
 def DFS(start):
     global result
     visited[start] = 1

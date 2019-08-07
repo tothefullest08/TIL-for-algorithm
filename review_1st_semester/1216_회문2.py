@@ -16,4 +16,5 @@ for tc in range(1, 2):
             if y > x:
                 Table[y][x], Table[x][y] = Table[x][y], Table[y][x]
 
+
     print(Table)

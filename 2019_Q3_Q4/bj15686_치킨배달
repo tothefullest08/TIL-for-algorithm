@@ -1,0 +1,51 @@
+import sys
+sys.stdin = open('bj15686_치킨배달.txt', 'r')
+
+def combi(start):
+    if start == M:
+        tmp = [0]*M
+        for i in range(M):
+            tmp[i] = chicken_lst[result[i]]
+        combi_lst.append(tmp)
+        return
+
+    for i in range(C_N):
+        if index_fuel[i] > 0:
+            if start > 0:
+                if result[start-1] > i:
+                    continue
+            index_fuel[i] -= 1
+            result[start] = i
+            combi(start+1)
+            index_fuel[i] += 1
+
+
+N, M = map(int, input().split())
+MyMap = [list(map(int, input().split())) for _ in range(N)]
+home_lst = []
+chicken_lst = []
+for y in range(N):
+    for x in range(N):
+        if MyMap[y][x] == 1:
+            home_lst.append([y,x])
+        elif MyMap[y][x] == 2:
+            chicken_lst.append([y,x])
+
+C_N = len(chicken_lst)
+index_fuel = [1]*C_N
+result = [0]*M
+combi_lst = []
+combi(0)
+# 최대로 살릴 수 있는 치킨집 갯수를 기준으로 조합 돌림
+
+final_ans = []
+for store_lst in combi_lst: #store_lst: 전체 조합 중 개별적인 경우의 수
+    my_lst = []
+    for home in home_lst: #home: 개별적 집 주소
+        my_sub_lst = []
+        for store in store_lst: #집 주소 기준으로, 선택된 경우의수에 따라(치킨집), 치킨집의 거리 계산
+            my_sub_lst.append(abs(store[0] - home[0]) + abs(store[1] - home[1]))
+        my_lst.append(min(my_sub_lst)) #선택된 치킨 집 중, 가까운 거리를 선택
+    final_ans.append(sum(my_lst)) #각 집마다 계산된 거리를 합해서 final_ans에 넣음
+
+print(min(final_ans)) #최소 거리 계산.

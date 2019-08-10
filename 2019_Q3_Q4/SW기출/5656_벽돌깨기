@@ -1,0 +1,64 @@
+import sys, itertools
+
+sys.stdin = open('5656_벽돌깨기.txt', 'r')
+
+
+def IsSafe(y, x):
+    return 0 <= y < Y1 and 0 <= x < X1
+
+
+def BFS():
+    while Q:
+        y, x = Q.pop(0)
+        tmp_map[y][x] = 0
+        for dir in range(4):
+            for i in range(1, MyMap2[y][x]):
+                n_y = y + dy[dir] * i
+                n_x = x + dx[dir] * i
+                if IsSafe(n_y, n_x) and tmp_map[n_y][n_x]>0 and [n_y, n_x] not in Q:
+                    Q.append([n_y, n_x])
+        # print(Q)
+
+
+TC = int(input())
+for tc in range(1, TC + 1):
+    T, X, Y = map(int, input().split())
+    MyMap = [list(map(int, input().split())) for _ in range(Y)]
+
+    # 맵 돌리기
+    MyMap2 = [[0] * Y for _ in range(X)]
+    for y in range(Y):
+        for x in range(X):
+            MyMap2[x][y] = MyMap[Y - 1 - y][x]
+
+    Y1, X1 = X, Y
+
+    dy = [-1, 1, 0, 0]
+    dx = [0, 0, -1, 1]
+
+    # 중복조합
+    y_lst = [_ for _ in range(Y1)]
+    where_to_drop = list(itertools.product(y_lst, repeat=T))
+    where_to_drop = [(2,2,6)]
+    # print(where_to_drop)
+    # where_to_drop = list(itertools.combinations_with_replacement(y_lst, T))
+
+    # 중복 조합 반복
+    for drop_lst in where_to_drop:
+
+        # tmp 맵 생성
+        tmp_map = [[0] * X1 for _ in range(Y1)]
+        for y in range(Y1):
+            for x in range(X1):
+                tmp_map[y][x] = MyMap2[y][x]
+
+        # 개별 조합 별 y선택 후 BFS
+        for selected in drop_lst:
+            Q = []
+            for x in range(X1 - 1, -1, -1):
+                if tmp_map[selected][x] > 0:
+                    Q.append([selected, x])
+                    BFS()
+                    break
+
+print(tmp_map)

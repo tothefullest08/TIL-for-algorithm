@@ -1,7 +1,7 @@
 import sys
 sys.stdin = open('bj14890_경사로.txt','r')
 
-
+import itertools
 
 N, L = map(int, input().split())
 MyMap = [list(map(int, input().split())) for _ in range(N)]

@@ -1,6 +1,3 @@
-
-
-
 import itertools
 
 # n개의 음이 아닌 정수가 있음. 이수를 적절히 더하거나 빼서 타켓 넘버를 구하려고함.
@@ -28,5 +25,3 @@ def solution(numbers, target):
 
 
 print(solution(numbers, target))
-
-
